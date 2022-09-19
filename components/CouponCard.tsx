@@ -119,20 +119,20 @@ function CouponCards({
                 {/* Image */}
                 <div className="relative flex justify-between items-center px-4 pt-2">
                 {
-                  (details.accountId === data?.ownerId) && 
-                  <>
-                      <a className="text-xs text-emerald-500 hover:text-emerald-600 font-semibold uppercase tracking-widest mb-1" href="#0">{is_minted ? "Minted": "Unminted"}</a>
-                  <button className=" z-10 top-0 right-0 mr-4">
-                    <div title={is_minted ? "Burn" : "Delete"} className="text-slate-100 p-1 bg-slate-900 bg-opacity-60 rounded-full" style={{ background: 'white'}}>
-                      {
-                        is_minted && (details.accountId === data.ownerId) && <Fire size={20} color='red' onClick={(e) => {
-                          burnOne(id)}
-                        }/> 
-                      }
+                  // (details.accountId === data?.ownerId) && 
+                  // <>
+                  //     <a className="text-xs text-emerald-500 hover:text-emerald-600 font-semibold uppercase tracking-widest mb-1" href="#0">{is_minted ? "Minted": "Unminted"}</a>
+                  // <button className=" z-10 top-0 right-0 mr-4">
+                  //   <div title={is_minted ? "Burn" : "Delete"} className="text-slate-100 p-1 bg-slate-900 bg-opacity-60 rounded-full" style={{ background: 'white'}}>
+                  //     {
+                  //       is_minted && (details.accountId === data.ownerId) && <Fire size={20} color='red' onClick={(e) => {
+                  //         burnOne(id)}
+                  //       }/> 
+                  //     }
                     
-                    </div>
-                  </button>
-                  </>
+                  //   </div>
+                  // </button>
+                  // </>
                 }
                 {
                   (details.accountId === data?.ownerId) && 
@@ -174,15 +174,6 @@ function CouponCards({
                       <div className="text-sm text-center text-white m-2" style={{ fontSize: '0.7rem'}}>{description}</div>
                       {id && <p className="text-rose-400 text-center" style={{ fontSize: '0.6rem'}}>token id: {id}</p>} 
 
-
-                      {/* <div >
-                          {
-                            is_minted && (details.accountId === data.ownerId) && <button title={`Sell ${data?.title || store_name}`} className='animate-none shadow-xl outline mx-2 text-white  p-2 px-6 rounded-lg cursor-pointer  m-2' style={{ background: 'linear-gradient(90deg, #273f5c, #af4caa)'}} onClick={() => {}}><Coins size={18} /></button>
-                          }
-                          {
-                            is_minted && (details.accountId === data.ownerId) && <button title={`Sell ${data?.title || store_name}`} className='animate-none shadow-xl outline mx-2 text-white  p-2 px-6 rounded-lg cursor-pointer  m-2' style={{ background: 'linear-gradient(90deg, #273f5c, #af4caa)'}} onClick={() => {}}><Swap size={18} /></button>
-                          }
-                        </div> */}
                     </header>
                    
                 
@@ -191,6 +182,11 @@ function CouponCards({
 
                           {
                             !is_minted && <button className='animate-none shadow-xl outline mx-2 text-white  p-2 px-6 rounded-lg cursor-pointer  m-2' style={{ background: 'linear-gradient(90deg, #273f5c, #af4caa)'}} onClick={() => setData(mintData())}>Mint</button>
+                          }
+                          {
+                            is_minted && <button className='animate-none shadow-xl outline mx-2 text-white  p-2 px-6 rounded-lg cursor-pointer  m-2' style={{ 
+                              // background: 'linear-gradient(90deg, #273f5c, #af4caa)'
+                            }} onClick={() => alert('Show modal ' + data?.title)}>Compare</button>
                           }
                           {
                             !is_minted && <button onClick={() => setData(couponData())} className='animate-none shadow-xl outline mx-2 text-white  p-2 px-6 rounded-lg cursor-pointer  m-2' style={{ background: 'linear-gradient(90deg, #273f5c, #af4caa)'}}>Edit</button>

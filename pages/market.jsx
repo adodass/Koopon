@@ -97,8 +97,8 @@ function Market() {
 
   return (
     <>
-      <div className='flex' style={{ paddingLeft: '15%'}}>
-        <div className='min-h-screen fixed top-0 left-0 z-10' style={{ background: '#1e3045', padding: '4rem 1rem', paddingTop: '7rem', width: '18%'}}>
+      <div className='flex ' style={{ paddingLeft: '15%'}}>
+        <div className='min-h-screen fixed top-0 left-0 z-10 ' style={{ background: '#1e3045', padding: '4rem 1rem', paddingTop: '7rem', width: '18%'}}>
         
           <ul className='' style={{paddingTop: '2rem'}} >
             <Link href='/' className=''>
@@ -119,7 +119,10 @@ function Market() {
             {isConnected && <li onClick={() => {wallet?.disconnect(); window.location.reload()}} className='text-white flex items-center cursor-pointer' style={{ marginBottom: '2rem', fontSize: '0.8rem'}}> <SignOut size={18} color="white" style={{marginRight: '1rem'}}/>{isConnected && "Disconnect wallet"}</li>}
           </ul>
         </div>
-        <div style={{ background: 'rgba(39,63,92, 0.9)', width: '100%', }} className="min-h-screen">
+        <div style={{ 
+          // background: 'rgba(39,63,92, 0.9)', 
+          width: '100%', 
+          }} className="min-h-screen bg-gray-100">
           <nav className='p-4 flex items-center justify-end sticky top-0 right-0 z-20' style={{ width: '100%', background: '#1e3045' }}>
             <div>
               <input type='search' placeholder="search stores, coupons, ..." onChange={e => setSearchInput(e.target.value)} style={{ background: 'rgba(39,63,92, 0.9)', color: 'white'}}  className='rounded-lg p-4'/>
@@ -209,7 +212,7 @@ function Market() {
             </div>
 
           </div>
-          <div style={{ }} className="flex flex-wrap p-6 justify-center">
+          <div style={{ }} className="flex flex-wrap p-6 justify-center ">
             {
               filteredCoupons(coupons)?.filter(item => item.is_minted).map(item => (
                 <CouponCards {...item} key={item._id}/>
