@@ -8,6 +8,7 @@ import Switch from "react-switch";
 import { Wallet, FolderOpen, Folder, SignOut, Storefront, HouseSimple, Ticket, X} from 'phosphor-react';
 import Toast from '../components/Toast';
 import CouponCards from "../components/CouponCard";
+import Image from 'next/image';
 
 // import Sidebar from '../../partials/Sidebar';
 // import Header from '../../partials/Header';
@@ -25,6 +26,9 @@ function Market() {
   const [toastErrorOpen2, setToastErrorOpen2] = useState(false);
   const [store, setStore] = useState({});
   const [loading, setLoading]  = useState(false);
+  const [compare, setCompare] = useState([]);
+  const [openDropdown, setDropdown] = useState(false)
+  const [openCompareModal, setOpenCompareModal] = useState(false)
 
   async function getStoreDetails(event) {
     const { value, name } = event.target;
@@ -69,7 +73,7 @@ function Market() {
     const filteredResult = newArr.filter(item => item?.data?.title?.toLowerCase().includes(searchInput.toLowerCase()) || item?.store_name?.toLowerCase().includes(searchInput.toLowerCase()))
 
     // console.log('Filtered result', filteredResult)
-    const filterByStore = filteredResult.filter(item => console.log(item?.store));
+    // const filterByStore = filteredResult.filter(item => console.log(item?.store));
     // console.log('Filter by store', filterByStore)
     return filteredResult;
   }
@@ -88,12 +92,23 @@ function Market() {
   }
 
 
+  function compareAandB(data) {
+    const newArr = [...compare]
+    if (newArr.length === 2) {
+      newArr.pop();
+    }
+    newArr.push(data);
+    setCompare(newArr)
+  }
+
+
   useEffect(() => {
     getAllCoupons()
     filterMarketPlace();
   }, [coupons.length])
 
 
+  console.table(coupons)
 
   return (
     <>
@@ -215,7 +230,12 @@ function Market() {
           <div style={{ }} className="flex flex-wrap p-6 justify-center ">
             {
               filteredCoupons(coupons)?.filter(item => item.is_minted).map(item => (
-                <CouponCards {...item} key={item._id}/>
+                <CouponCards 
+                {...item} 
+                key={item._id} 
+                compareAandB={compareAandB} 
+                setOpenCompareModal={setOpenCompareModal}
+              />
               )).reverse()
             }
           </div>
@@ -270,6 +290,57 @@ function Market() {
 
         </div>
       }
+
+      {
+        openCompareModal &&
+        <div className='fixed top-0 left-0 right-0 bottom-0 w-full min-h-screen z-20 flex justify-center items-center' style={{ background: 'rgba(0, 0, 0, 0.9)'}}>
+          <div className='bg-white rounded-lg p-4 relative'>
+            <h1 className='text-gray'>Comparing {compare[0]?.store_name} to {compare[1]?.store_name}</h1>
+            <input onChange={e => {setSearchInput(e.target.value); setDropdown(true)}}  className='p-2 w-full border border-gray' value={searchInput} placeholder='search coupon to compare' type='search'/>
+            {
+              openDropdown &&
+                <div className=' bg-white p-4 absolute top-22 overflow-y-scroll' style={{ width: '92.5%', height: '14rem'}}>
+                  <ul>
+                    {
+                      filteredCoupons(coupons).map((item, i) => (
+                        <li key={i} onClick={() => { setDropdown(false); compareAandB(item);}} className='p-1 bg-white border-b-2 cursor-pointer my-2 hover:bg-gray-300 hover:text-white'>{item.store_name}</li>
+                      ))
+                    }
+                  </ul>
+                </div>
+            }
+          <div className=' rounded-lg m-2 p-6 bg-gray-100 flex justify-center items-center' style={{
+            
+          }}>
+            <div className='p-4 border-2 border-gray mx-2'>
+              <h3 className=''>Shop: {compare[0]?.store_name}</h3>
+              <div>
+                {/* <Image /> */}
+              </div>
+              <p>Description: {compare[0]?.description}</p>
+              <p>Quantity: {compare[0]?.quantity}</p>
+              <p>Discount: {compare[0]?.discount}%</p>
+              <p>Old Price: {compare[0]?.price}</p>
+              <p>New Price: {compare[0]?.price - (compare[0]?.price * (compare[0]?.discount/100))}</p>
+            </div>
+            <div className='p-4 border-2 border-gray mx-2'>
+            <h3 className=''>Shop: {compare[1]?.store_name}</h3>
+              <div>
+                {/* <Image /> */}
+              </div>
+              <p>Description: {compare[1]?.description}</p>
+              <p>Quantity: {compare[1]?.quantity}</p>
+              <p>Discount: {compare[1]?.discount}%</p>
+              <p>Old Price: {compare[1]?.price}</p>
+              <p>New Price: {compare[1]?.price - (compare[1]?.price * (compare[1]?.discount/100))}</p>
+            </div>
+
+            </div>
+          <button onClick={() => { setSearchInput(''); setOpenCompareModal(false); setDropdown(false); setCompare([])}} className='animate-none shadow-xl outline mx-2  p-2 px-6 rounded-lg cursor-pointer  m-2'>Close</button>
+          </div>
+        </div>
+      }
+
     </>
   )
 

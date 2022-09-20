@@ -28,7 +28,9 @@ function CouponCards({
     setFeedbackModalOpen,
     setMintModalOpen,
     getMyCoupons,
-    burnOne
+    burnOne,
+    compareAandB,
+    setOpenCompareModal
   }:any) {
 
     const { wallet, isConnected, details } = useWallet();
@@ -186,7 +188,19 @@ function CouponCards({
                           {
                             is_minted && <button className='animate-none shadow-xl outline mx-2 text-white  p-2 px-6 rounded-lg cursor-pointer  m-2' style={{ 
                               // background: 'linear-gradient(90deg, #273f5c, #af4caa)'
-                            }} onClick={() => alert('Show modal ' + data?.title)}>Compare</button>
+                            }} onClick={() => {compareAandB({ 
+                              store_name, 
+                              category,
+                              data, 
+                              is_minted, 
+                              expiry_date, 
+                              start_date, 
+                              price, 
+                              quantity, 
+                              discount, 
+                              description, 
+                              accountId,
+                            }); setOpenCompareModal(true)}}>Compare</button>
                           }
                           {
                             !is_minted && <button onClick={() => setData(couponData())} className='animate-none shadow-xl outline mx-2 text-white  p-2 px-6 rounded-lg cursor-pointer  m-2' style={{ background: 'linear-gradient(90deg, #273f5c, #af4caa)'}}>Edit</button>
