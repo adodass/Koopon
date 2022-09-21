@@ -28,7 +28,8 @@ function Product() {
 
   async function getList() {
     const response = await wallet?.api?.fetchStoreById(data?.store);
-    const response2 = await wallet?.api?.fetchThingById(data?.data?.thing?.metaId + ":" + data?.store)
+    const response2 = await wallet?.api?.fetchThingById(data?.data?.thing?.metaId+ ":" + data?.data?.store?.id)
+    console.log('Metadata: ', data?.data?.thing?.metaId+ ":" + data?.data?.store?.id)
     // const response2 = await wallet?.api?.fetchThingById(response?.data?.store[0]?.things[1]?.id)
     // console.log(data?.data?.thing?.metaId + ":" + data?.store)
     // console.log(await wallet?.transactionStatus('srqYiYYPTDyJkBSsSXPZPbvEuf64PsyrtKnsKLxggo5', 'mbiplang.testnet')) 
@@ -36,10 +37,13 @@ function Product() {
     // console.log(await wallet?.api?.fetchTokenById("45" + ":" + data?.store))
     // console.log(response2?.data?.thing[0])
     // console.log(await wallet?.api?.fetchListById("45" + ":" + data?.store))
-    console.log(await wallet?.api?.fetchLists())
-    console.log(await wallet?.api?.fetchMarketplace())
+    // console.log(await wallet?.api?.fetchLists())
+    // console.log(await wallet?.api?.fetchMarketplace())
     // console.log(await wallet?.api?.fetchListById('51:shop45.mintspace2.testnet'))
+    console.log("Thing: ", response2)
+    console.log("Store: ", response?.data?.store[0]?.things[0])
     setCouponDetails(response2?.data?.thing[0])
+    // setCouponDetails(response2?.data?.thing[0])
   }
 
   async function burnAllCoupons() {                           
@@ -83,13 +87,14 @@ function Product() {
   useEffect(() => {
     const getData = JSON.parse(localStorage.getItem('data'));
     setData(getData);
+    // console.log("Get data: ", getData);
     if(data._id){
       getList()
     }
   }, [data._id])
 
 
-  console.log("State: ", data._id)
+  console.log("State: ", data);
   
   return (
     <>

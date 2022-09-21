@@ -3,7 +3,7 @@ import Link from "next/link"
 import { MbButton } from "mintbase-ui"
 import Modal from "./Modal"
 import Image from "next/image"
-import { Trash, Fire, Ticket, Coins, Swap } from 'phosphor-react';
+import { Trash, Fire, Ticket, Coins, Swap, ShareNetwork } from 'phosphor-react';
 import { useWallet } from '../services/providers/MintbaseWalletContext'
 import axios from "axios"
 import { useRouter } from "next/router"
@@ -94,6 +94,9 @@ function CouponCards({
 
 
     function saveToLocalStorage() {
+      if(!is_minted) {
+        return alert('Coupon not minted!');
+      }
       localStorage.setItem('data', JSON.stringify({
         _id,
         store_name, 
@@ -113,6 +116,12 @@ function CouponCards({
       router.push(`/coupon/${_id}`)
     }
 
+    // console.log(router)
+
+    function checkPath() {
+      return router.route === 
+      "/coupon/[index]"
+    }
 
     return (
         <>
@@ -120,6 +129,14 @@ function CouponCards({
               <div className="flex flex-col h-full">
                 {/* Image */}
                 <div className="relative flex justify-between items-center px-4 pt-2">
+                  {
+                    is_minted && (checkPath()) && 
+                    <button className="">
+                    <div title={is_minted ? "Burn" : "Delete"} className="text-slate-100 p-1 bg-slate-900 bg-opacity-60 rounded-full" style={{ background: 'white'}}>
+                      <ShareNetwork size={20} color="gray" />
+                    </div>
+                    </button>
+                  }
                 {
                   // (details.accountId === data?.ownerId) && 
                   // <>
@@ -186,7 +203,7 @@ function CouponCards({
                             !is_minted && <button className='animate-none shadow-xl outline mx-2 text-white  p-2 px-6 rounded-lg cursor-pointer  m-2' style={{ background: 'linear-gradient(90deg, #273f5c, #af4caa)'}} onClick={() => setData(mintData())}>Mint</button>
                           }
                           {
-                            is_minted && <button className='animate-none shadow-xl outline mx-2 text-white  p-2 px-6 rounded-lg cursor-pointer  m-2' style={{ 
+                            is_minted && (!checkPath()) && <button className='animate-none shadow-xl outline mx-2 text-white  p-2 px-6 rounded-lg cursor-pointer  m-2' style={{ 
                               // background: 'linear-gradient(90deg, #273f5c, #af4caa)'
                             }} onClick={() => {compareAandB({ 
                               store_name, 

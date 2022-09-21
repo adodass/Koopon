@@ -108,7 +108,7 @@ function Market() {
   }, [coupons.length])
 
 
-  console.table(coupons)
+  // console.table(coupons)
 
   return (
     <>
@@ -300,10 +300,10 @@ function Market() {
             {
               openDropdown &&
                 <div className=' bg-white p-4 absolute top-22 overflow-y-scroll' style={{ width: '92.5%', height: '14rem'}}>
-                  <ul>
+                  <ul className='divide-y divide-slate-700'>
                     {
-                      filteredCoupons(coupons).map((item, i) => (
-                        <li key={i} onClick={() => { setDropdown(false); compareAandB(item);}} className='p-1 bg-white border-b-2 cursor-pointer my-2 hover:bg-gray-300 hover:text-white'>{item.store_name}</li>
+                      filteredCoupons(coupons)?.filter(item => item.is_minted).map((item, i) => (
+                        <li key={i} onClick={() => { setDropdown(false); compareAandB(item);}} className='p-1 bg-white cursor-pointer my-2 hover:bg-gray-300 hover:text-white'>{item.store_name}</li>
                       ))
                     }
                   </ul>
