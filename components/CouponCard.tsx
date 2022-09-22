@@ -24,6 +24,7 @@ function CouponCards({
     description, 
     accountId,
     store,
+    ownerId,
     setData,
     setFeedbackModalOpen,
     setMintModalOpen,
@@ -192,6 +193,7 @@ function CouponCards({
                       </div>
                       <div className="text-sm text-center text-white m-2" style={{ fontSize: '0.7rem'}}>{description}</div>
                       {id && <p className="text-rose-400 text-center" style={{ fontSize: '0.6rem'}}>token id: {id}</p>} 
+                      {ownerId && <p className="text-white text-center" style={{ fontSize: '0.6rem'}}>Owner: {ownerId}</p>} 
 
                     </header>
                    
