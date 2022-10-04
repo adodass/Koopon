@@ -29,6 +29,9 @@ function Market() {
   const [compare, setCompare] = useState([]);
   const [openDropdown, setDropdown] = useState(false)
   const [openCompareModal, setOpenCompareModal] = useState(false)
+  const [transferModal, setTransferModal] = useState(false);
+  const [tokenId, setTokenId] = useState(null);
+  const [recieverId, setRecieverId] = useState('')
 
   async function getStoreDetails(event) {
     const { value, name } = event.target;
@@ -99,6 +102,16 @@ function Market() {
     }
     newArr.push(data);
     setCompare(newArr)
+  }
+
+  async function simpleTransferToken(tokenId, recieverId, contractName) {
+    console.log({
+      tokenId,
+      recieverId,
+      contractName
+    });
+    const response = await wallet.simpleTransfer(tokenId, recieverId, contractName);
+    console.log(response);
   }
 
 
@@ -233,11 +246,14 @@ function Market() {
             {
               filteredCoupons(coupons)?.filter(item => item.is_minted).map(item => (
                 <CouponCards 
-                {...item} 
-                key={item._id} 
-                compareAandB={compareAandB} 
-                setOpenCompareModal={setOpenCompareModal}
-              />
+                  {...item} 
+                  key={item._id} 
+                  compareAandB={compareAandB} 
+                  setOpenCompareModal={setOpenCompareModal}
+                  setTransferModal={setTransferModal}
+                  setTokenId={setTokenId}
+                  setRecieverId={setRecieverId}
+                />
               )).reverse()
             }
           </div>
@@ -342,6 +358,50 @@ function Market() {
           </div>
         </div>
       }
+
+
+{
+                            transferModal && 
+                            <div className='fixed top-0 left-0 right-0 bottom-0 w-full min-h-screen z-20 flex justify-center items-center' style={{ background: 'rgba(0, 0, 0, 0.9)'}}>
+
+                            
+                                <div className=' rounded-lg m-2 p-6' style={{
+                        
+                                  background: ' #273f5c',
+                                  // background: 'linear-gradient(90deg, #273f5c, #2a0f29)',
+                                }}>
+                                  <X size={40} color="white" 
+                                  onClick={() => {setTransferModal(false); setTokenId('')}}
+                                  style={{
+                                    position:'absolute',
+                                    top: '1rem',
+                                    right: '1rem',
+                                    cursor: 'pointer'
+                                  }}/>
+                            
+                                  <Toast type="error" open={toastErrorOpen2} setOpen={setToastErrorOpen2}>
+                                  {responseMessage}
+                                </Toast>
+                                  <h1 className='text-white' style={{ fontSize: '1.5rem'}}>Transfer {"data?.data?.title"}??</h1>
+                                  <hr className='bg-white-400 mb-4'/>
+                                  {tokenId && <p style={{fontSize: '0.7rem'}} className='text-gray rounded p-4 bg-white mb-2 '>Token id: #{tokenId?.id?.split(':')[0]} <br/> {tokenId.store}</p>}
+                                  {tokenId && <input style={{fontSize: '0.7rem', width: '100%'}} className='text-gray rounded p-4 bg-white mb-2 ' placeholder='reciever id' onChange={e => setRecieverId(e.target.value)}/>}
+                                  <div>
+                                  <button onClick={() => {
+                                    simpleTransferToken(tokenId?.id?.split(':')[0], recieverId, tokenId.store ); 
+                                    setTransferModal(false); 
+                                    setTokenId('');
+                                  }} style={{ background: 'green'}} className={`w-full text-white h-full shadow-black text-left py-3 px-4 mb-2 rounded bg-white border border-slate-200 hover:border-slate-300 shadow-lg duration-150 ease-in-out`}
+                                    >Yes</button>
+                                  <button style={{ background: 'red'}} onClick={()=>{setTransferModal(false); setTokenId('')}} className={`w-full text-white h-full shadow-black text-left py-3 px-4 rounded bg-white border border-slate-200 hover:border-slate-300 shadow-lg duration-150 ease-in-out `}
+                                    >No</button>
+                                  </div>
+
+                                </div>
+                          
+
+                            </div>
+                          }
 
     </>
   )

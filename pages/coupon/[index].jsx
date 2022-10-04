@@ -8,6 +8,7 @@ import { useWallet } from '../../services/providers/MintbaseWalletContext';
 import Toast from '../../components/Toast';
 import { X } from 'phosphor-react';
 import * as nearAPI from "near-api-js";
+import Link from 'next/link';
 
 
 function Product() {
@@ -143,7 +144,7 @@ function Product() {
                 {/* Content */}
                 <div className=" w-50">
                   <div className="mb-3">
-                    <a className="text-sm font-medium text-white hover:animate-pulse" onClick={() => {localStorage.removeItem('data'); router.back(); } } href="#0">&lt;- Back</a>
+                    <Link href='/market' className="text-sm font-medium text-white hover:animate-pulse" onClick={() => {localStorage.removeItem('data'); } }>&lt;- Back</Link>
                   </div>
 
                   {/* <div style={{minWidth: '30rem', minHeight: '30rem', background: 'black', overflow: 'hidden'}}>
