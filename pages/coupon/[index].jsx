@@ -24,7 +24,8 @@ function Product() {
   const [couponDetails, setCouponDetails] = useState({});
   const [burnModal, setBurnModal] = useState(false);
   const [transferModal, setTransferModal] = useState(false);
-  const [tokenId, setTokenId] = useState('');
+  const [tokenId, setTokenId] = useState(null);
+  const [recieverId, setRecieverId] = useState('')
 
 
   async function getList() {
@@ -88,6 +89,14 @@ function Product() {
     const response = await wallet.list(store.tokenId?.split(':')[0], couponDetails?.storeId, utils.format.parseNearAmount(store.price), { autotransfer: true, marketAddress: 'market.mintspace2.testnet'});
     setShowDeployModal(false);
     setLoading(false)
+  }
+
+  async function simpleTransferToken(tokenId, recieverId, contractName) {
+    console.log({
+      tokenId,
+      recieverId,
+      contractName
+    });
   }
 
   useEffect(() => {
@@ -170,6 +179,7 @@ function Product() {
                           burnOne={burnSpecificCoupon}  
                           setTransferModal={setTransferModal}
                           setTokenId={setTokenId}
+                          simpleTransferToken={simpleTransferToken}
                           {...data} 
                           {...item} 
                         />
@@ -275,9 +285,14 @@ function Product() {
                                 </Toast>
                                   <h1 className='text-white' style={{ fontSize: '1.5rem'}}>Transfer {data?.data?.title}??</h1>
                                   <hr className='bg-white-400 mb-4'/>
-                                  {tokenId && <p className='text-gray rounded p-4 bg-white mb-2 '>{tokenId}</p>}
+                                  {tokenId && <p style={{fontSize: '0.7rem'}} className='text-gray rounded p-4 bg-white mb-2 '>Token id: #{tokenId?.id?.split(':')[0]} <br/> {tokenId.store}</p>}
+                                  {tokenId && <input style={{fontSize: '0.7rem', width: '100%'}} className='text-gray rounded p-4 bg-white mb-2 ' placeholder='reciever id' onChange={e => setRecieverId(e.target.value)}/>}
                                   <div>
-                                  <button onClick={() => {setTransferModal(false); setTokenId('')}} style={{ background: 'green'}} className={`w-full text-white h-full shadow-black text-left py-3 px-4 mb-2 rounded bg-white border border-slate-200 hover:border-slate-300 shadow-lg duration-150 ease-in-out`}
+                                  <button onClick={() => {
+                                    simpleTransferToken(tokenId?.id?.split(':')[0], recieverId, tokenId.store ); 
+                                    setTransferModal(false); 
+                                    setTokenId('');
+                                  }} style={{ background: 'green'}} className={`w-full text-white h-full shadow-black text-left py-3 px-4 mb-2 rounded bg-white border border-slate-200 hover:border-slate-300 shadow-lg duration-150 ease-in-out`}
                                     >Yes</button>
                                   <button style={{ background: 'red'}} onClick={()=>{setTransferModal(false); setTokenId('')}} className={`w-full text-white h-full shadow-black text-left py-3 px-4 rounded bg-white border border-slate-200 hover:border-slate-300 shadow-lg duration-150 ease-in-out `}
                                     >No</button>

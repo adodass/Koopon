@@ -33,7 +33,8 @@ function CouponCards({
     compareAandB,
     setOpenCompareModal,
     setTransferModal,
-    setTokenId
+    setTokenId,
+    simpleTransferToken
   }:any) {
 
     const { wallet, isConnected, details } = useWallet();
@@ -232,11 +233,14 @@ function CouponCards({
                                 (details.accountId === data?.ownerId) && 
                                 <>
                       
-                                <button onClick={()=> { setTransferModal(true); setTokenId(id)}} className='animate-none shadow-xl outline mx-2 text-white  p-2 px-6 rounded-lg cursor-pointer  m-2'>
+                                <button onClick={()=> { setTransferModal(true); setTokenId({
+                                  id,
+                                  store
+                                })}} className='animate-none shadow-xl outline mx-2 text-white  p-2 px-6 rounded-lg cursor-pointer  m-2'>
                                   Transfer
                                 </button>
                                 </>
-                              }
+                          }
               </div>
             </div>
                           
