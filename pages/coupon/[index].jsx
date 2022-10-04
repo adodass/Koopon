@@ -97,6 +97,8 @@ function Product() {
       recieverId,
       contractName
     });
+    const response = await wallet.simpleTransfer(tokenId, recieverId, contractName);
+    console.log(response);
   }
 
   useEffect(() => {
