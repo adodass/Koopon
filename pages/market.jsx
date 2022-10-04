@@ -108,7 +108,7 @@ function Market() {
   }, [coupons.length])
 
 
-  // console.table(coupons)
+  console.table(details.balance)
 
   return (
     <>
@@ -206,7 +206,9 @@ function Market() {
 
               <div className='p-4 '>
                 <Ticket size={100} color="white"/>
-                <h1 className='text-white text-center'>Market Place</h1>
+                {isConnected && <h1 className='text-white text-center'>Balance: {details?.balance}</h1>}
+                {!isConnected && <h1 className='text-white text-center'>Market Place</h1>}
+                
               </div>
 
               <div className='p-3 f' style={{ width: '20rem', }}>

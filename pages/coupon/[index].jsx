@@ -21,9 +21,10 @@ function Product() {
   const [store, setStore] = useState({});
   const [responseMessage, setResponseMessage] = useState("");
   const [toastErrorOpen2, setToastErrorOpen2] = useState(false);
-  const [couponDetails, setCouponDetails] = useState([]);
+  const [couponDetails, setCouponDetails] = useState({});
   const [burnModal, setBurnModal] = useState(false);
   const [transferModal, setTransferModal] = useState(false);
+  const [tokenId, setTokenId] = useState('');
 
 
   async function getList() {
@@ -96,10 +97,18 @@ function Product() {
     if(data._id){
       getList()
     }
-  }, [data._id])
+  }, [data?._id]);
 
 
-  console.log("State: ", data);
+
+
+
+  // useEffect(() => {
+
+  // }, [couponDetails?.length])
+
+
+  // console.log("Final Tokens: ", couponDetails);
   
   return (
     <>
@@ -117,11 +126,11 @@ function Product() {
             <div className="px-4 sm:px-6 lg:px-8 py-8 w-full">
 
               {/* Page content */}
-              <div className="max-w-5xl mx-auto flex flex-col lg:flex-row lg:space-x-8 xl:space-x-16">
+              <div className="max-w-5xl mx-auto flex justify-between flex-col lg:flex-row lg:space-x-8 xl:space-x-16">
 
 
                 {/* Content */}
-                <div>
+                <div className=" w-50">
                   <div className="mb-3">
                     <a className="text-sm font-medium text-white hover:animate-pulse" onClick={() => {localStorage.removeItem('data'); router.back(); } } href="#0">&lt;- Back</a>
                   </div>
@@ -156,7 +165,14 @@ function Product() {
                   <div className='flex justify-center items-center flex-wrap' style={{ height: '60vh', overflowY: 'scroll'}}>
                     {
                       couponDetails?.tokens?.map((item, index) => (
-                        <CouponCards burnOne={burnSpecificCoupon}  {...data} {...item} key={index.toString()}/>
+                        <CouponCards 
+                          key={index.toString()}
+                          burnOne={burnSpecificCoupon}  
+                          setTransferModal={setTransferModal}
+                          setTokenId={setTokenId}
+                          {...data} 
+                          {...item} 
+                        />
                       ))
                     }
                   </div>
@@ -178,9 +194,7 @@ function Product() {
                             <button onClick={() => setBurnModal(true)} style={{ background: 'red'}} className="w-full h-full text-left py-3 px-4 rounded bg-white hover:border-slate-300 shadow-lg shadow-black duration-150 ease-in-out">
                               <div className="flex flex-wrap items-center justify-center mb-0.5 " >
                                 <span className="font-semibold text-slate-800 " style={{ color: 'white'}}>Burn</span>
-                                {/* <span className="font-medium text-emerald-600">$39.00</span> */}
                               </div>
-                              {/* <div className="text-sm">Lorem ipsum dolor sit amet elit sed do eiusmod.</div> */}
                             </button>
                           </li>
                           {
@@ -248,7 +262,7 @@ function Product() {
                                   // background: 'linear-gradient(90deg, #273f5c, #2a0f29)',
                                 }}>
                                   <X size={40} color="white" 
-                                  onClick={() => setTransferModal(false)}
+                                  onClick={() => {setTransferModal(false); setTokenId('')}}
                                   style={{
                                     position:'absolute',
                                     top: '1rem',
@@ -261,18 +275,11 @@ function Product() {
                                 </Toast>
                                   <h1 className='text-white' style={{ fontSize: '1.5rem'}}>Transfer {data?.data?.title}??</h1>
                                   <hr className='bg-white-400 mb-4'/>
-                                  {/* <div className='mb-2'>
-                                    <div className='mb-2'>
-                                      <label className='text-white'>Store Name</label>
-                                    </div>
-                                    <input name='store_name'  type='search' placeholder="mintbase-store" onChange={getStoreDetails} style={{ background: 'white', color: '#7f7f7f'}}  className='rounded-lg p-4'/>
-                                  </div> */}
+                                  {tokenId && <p className='text-gray rounded p-4 bg-white mb-2 '>{tokenId}</p>}
                                   <div>
-                                  <button onClick={() => {}} className={`text-white shadow-xl outline p-3 rounded-lg cursor-pointer `}
-                                    // style={{ background: 'linear-gradient(90deg, #273f5c, #af4caa)'}}
+                                  <button onClick={() => {setTransferModal(false); setTokenId('')}} style={{ background: 'green'}} className={`w-full text-white h-full shadow-black text-left py-3 px-4 mb-2 rounded bg-white border border-slate-200 hover:border-slate-300 shadow-lg duration-150 ease-in-out`}
                                     >Yes</button>
-                                  <button onClick={()=>setTransferModal(false)} className={`text-white shadow-xl outline p-3 rounded-lg cursor-pointer `}
-                                    // style={{ background: 'linear-gradient(90deg, #273f5c, #af4caa)'}}
+                                  <button style={{ background: 'red'}} onClick={()=>{setTransferModal(false); setTokenId('')}} className={`w-full text-white h-full shadow-black text-left py-3 px-4 rounded bg-white border border-slate-200 hover:border-slate-300 shadow-lg duration-150 ease-in-out `}
                                     >No</button>
                                   </div>
 
@@ -393,6 +400,7 @@ function Product() {
 
         </div>
       }
+     
     </>
   );
 }

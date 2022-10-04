@@ -31,7 +31,9 @@ function CouponCards({
     getMyCoupons,
     burnOne,
     compareAandB,
-    setOpenCompareModal
+    setOpenCompareModal,
+    setTransferModal,
+    setTokenId
   }:any) {
 
     const { wallet, isConnected, details } = useWallet();
@@ -133,7 +135,7 @@ function CouponCards({
                   {
                     is_minted && (checkPath()) && 
                     <button className="">
-                    <div title={is_minted ? "Burn" : "Delete"} className="text-slate-100 p-1 bg-slate-900 bg-opacity-60 rounded-full" style={{ background: 'white'}}>
+                    <div title={"Share"} className="text-slate-100 p-1 bg-slate-900 bg-opacity-60 rounded-full" style={{ background: 'white'}}>
                       <ShareNetwork size={20} color="gray" />
                     </div>
                     </button>
@@ -199,13 +201,14 @@ function CouponCards({
                    
                 
                 </div>
-                        <div className="flex justify-center pb-2">
+                        <div className="fle justify-center pb-2">
 
                           {
                             !is_minted && <button className='animate-none shadow-xl outline mx-2 text-white  p-2 px-6 rounded-lg cursor-pointer  m-2' style={{ background: 'linear-gradient(90deg, #273f5c, #af4caa)'}} onClick={() => setData(mintData())}>Mint</button>
                           }
                           {
                             is_minted && (!checkPath()) && <button className='animate-none shadow-xl outline mx-2 text-white  p-2 px-6 rounded-lg cursor-pointer  m-2' style={{ 
+                              width: '90%'
                               // background: 'linear-gradient(90deg, #273f5c, #af4caa)'
                             }} onClick={() => {compareAandB({ 
                               store_name, 
@@ -225,9 +228,18 @@ function CouponCards({
                             !is_minted && <button onClick={() => setData(couponData())} className='animate-none shadow-xl outline mx-2 text-white  p-2 px-6 rounded-lg cursor-pointer  m-2' style={{ background: 'linear-gradient(90deg, #273f5c, #af4caa)'}}>Edit</button>
                           }
                         </div>
+                          {
+                                (details.accountId === data?.ownerId) && 
+                                <>
+                      
+                                <button onClick={()=> { setTransferModal(true); setTokenId(id)}} className='animate-none shadow-xl outline mx-2 text-white  p-2 px-6 rounded-lg cursor-pointer  m-2'>
+                                  Transfer
+                                </button>
+                                </>
+                              }
               </div>
             </div>
-        
+                          
         </>
     )
   }
