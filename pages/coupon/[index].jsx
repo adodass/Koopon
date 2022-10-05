@@ -9,7 +9,7 @@ import Toast from '../../components/Toast';
 import { X } from 'phosphor-react';
 import * as nearAPI from "near-api-js";
 import Link from 'next/link';
-
+import axios from 'axios';
 
 function Product() {
   const { utils } = nearAPI;
@@ -27,6 +27,49 @@ function Product() {
   const [transferModal, setTransferModal] = useState(false);
   const [tokenId, setTokenId] = useState(null);
   const [recieverId, setRecieverId] = useState('')
+  const [compare, setCompare] = useState([]);
+  const [openDropdown, setDropdown] = useState(false)
+  const [openCompareModal, setOpenCompareModal] = useState(false)
+  const [searchInput, setSearchInput] = useState('');
+  const [coupons, setCoupons] = useState([]);
+
+
+  function filteredCoupons(arr = []) {
+    const newArr = [...arr];
+    const filteredResult = newArr.filter(item => item?.data?.title?.toLowerCase().includes(searchInput.toLowerCase()) || item?.store_name?.toLowerCase().includes(searchInput.toLowerCase()))
+
+    // console.log('Filtered result', filteredResult)
+    // const filterByStore = filteredResult.filter(item => console.log(item?.store));
+    // console.log('Filter by store', filterByStore)
+    return filteredResult;
+  }
+
+
+  function compareAandB(data) {
+    const newArr = [...compare]
+    if (newArr.length === 2) {
+      newArr.pop();
+    }
+    newArr.push(data);
+    setCompare(newArr)
+  }
+
+
+  async function getAllCoupons() {
+
+    try {
+        const res = await axios.get(`https://still-garden-99623.herokuapp.com/koopon`, {
+            headers: {
+                "Content-Type": 'application/json'
+            }
+        });
+        console.log("/[coupon]: ", res.data?.data)
+        setCoupons(res.data?.data)
+
+    } catch (error) {
+        console.log(error)
+    }
+}
 
 
   async function getList() {
@@ -112,6 +155,11 @@ function Product() {
   }, [data?._id]);
 
 
+  useEffect(() => {
+    getAllCoupons();
+  }, [])
+
+
 
 
 
@@ -120,7 +168,7 @@ function Product() {
   // }, [couponDetails?.length])
 
 
-  // console.log("Final Tokens: ", couponDetails);
+  console.table(data);
   
   return (
     <>
@@ -308,9 +356,11 @@ function Product() {
                           }
 
                           <li>
-                            <button onClick={() => setShowDeployModal(true)} className="w-full h-full shadow-black text-left py-3 px-4 rounded bg-white border border-slate-200 hover:border-slate-300 shadow-lg duration-150 ease-in-out">
+                            <button onClick={() => {
+                              compareAandB({...data}); setOpenCompareModal(true);
+                            }} className="w-full h-full shadow-black text-left py-3 px-4 rounded bg-white border border-slate-200 hover:border-slate-300 shadow-lg duration-150 ease-in-out">
                               <div className="flex flex-wrap items-center justify-center mb-0.5">
-                                <span className="font-semibold text-slate-800" >List</span>
+                                <span className="font-semibold text-slate-800" >Compare</span>
                                 {/* <span className="font-medium text-emerald-600">$89.00</span> */}
                               </div>
                               {/* <div className="text-sm">Lorem ipsum dolor sit amet elit sed do eiusmod.</div> */}
@@ -416,6 +466,57 @@ function Product() {
             </div>
       
 
+        </div>
+      }
+
+
+{
+        openCompareModal &&
+        <div className='fixed top-0 left-0 right-0 bottom-0 w-full min-h-screen z-20 flex justify-center items-center' style={{ background: 'rgba(0, 0, 0, 0.9)'}}>
+          <div className='bg-white rounded-lg p-4 relative'>
+            <h1 className='text-gray'>Comparing {compare[0]?.store_name} to {compare[1]?.store_name}</h1>
+            <input onChange={e => {setSearchInput(e.target.value); setDropdown(true)}}  className='p-2 w-full border border-gray' value={searchInput} placeholder='search coupon to compare' type='search'/>
+            {
+              openDropdown &&
+                <div className=' bg-white p-4 absolute top-22 overflow-y-scroll' style={{ width: '92.5%', height: '14rem'}}>
+                  <ul className='divide-y divide-slate-700'>
+                    {
+                      filteredCoupons(coupons)?.filter(item => item.is_minted).map((item, i) => (
+                        <li key={i} onClick={() => { setDropdown(false); compareAandB(item);}} className='p-1 bg-white cursor-pointer my-2 hover:bg-gray-300 hover:text-white'>{item.store_name}</li>
+                      ))
+                    }
+                  </ul>
+                </div>
+            }
+          <div className=' rounded-lg m-2 p-6 bg-gray-100 flex justify-center items-center' style={{
+            
+          }}>
+            <div className='p-4 border-2 border-gray mx-2'>
+              <h3 className=''>Shop: {compare[0]?.store_name}</h3>
+              <div>
+                {/* <Image /> */}
+              </div>
+              <p>Description: {compare[0]?.description}</p>
+              <p>Quantity: {compare[0]?.quantity}</p>
+              <p>Discount: {compare[0]?.discount}%</p>
+              <p>Old Price: {compare[0]?.price}</p>
+              <p>New Price: {compare[0]?.price - (compare[0]?.price * (compare[0]?.discount/100))}</p>
+            </div>
+            <div className='p-4 border-2 border-gray mx-2'>
+            <h3 className=''>Shop: {compare[1]?.store_name}</h3>
+              <div>
+                {/* <Image /> */}
+              </div>
+              <p>Description: {compare[1]?.description}</p>
+              <p>Quantity: {compare[1]?.quantity}</p>
+              <p>Discount: {compare[1]?.discount}%</p>
+              <p>Old Price: {compare[1]?.price}</p>
+              <p>New Price: {compare[1]?.price - (compare[1]?.price * (compare[1]?.discount/100))}</p>
+            </div>
+
+            </div>
+          <button onClick={() => { setSearchInput(''); setOpenCompareModal(false); setDropdown(false); setCompare([])}} className='animate-none shadow-xl outline mx-2  p-2 px-6 rounded-lg cursor-pointer  m-2'>Close</button>
+          </div>
         </div>
       }
      

@@ -3,7 +3,7 @@ import Link from "next/link"
 import { MbButton } from "mintbase-ui"
 import Modal from "./Modal"
 import Image from "next/image"
-import { Trash, Fire, Ticket, Coins, Swap, ShareNetwork } from 'phosphor-react';
+import { Trash, Fire, Ticket, Coins, Swap, ShareNetwork, TelegramLogo } from 'phosphor-react';
 import { useWallet } from '../services/providers/MintbaseWalletContext'
 import axios from "axios"
 import { useRouter } from "next/router"
@@ -207,7 +207,7 @@ function CouponCards({
                           {
                             !is_minted && <button className='animate-none shadow-xl outline mx-2 text-white  p-2 px-6 rounded-lg cursor-pointer  m-2' style={{ background: 'linear-gradient(90deg, #273f5c, #af4caa)'}} onClick={() => setData(mintData())}>Mint</button>
                           }
-                          {
+                          {/* {
                             is_minted && (!checkPath()) && <button className='animate-none shadow-xl outline mx-2 text-white  p-2 px-6 rounded-lg cursor-pointer  m-2' style={{ 
                               width: '90%'
                               // background: 'linear-gradient(90deg, #273f5c, #af4caa)'
@@ -224,21 +224,21 @@ function CouponCards({
                               description, 
                               accountId,
                             }); setOpenCompareModal(true)}}>Compare</button>
-                          }
+                          } */}
                           {
                             !is_minted && <button onClick={() => setData(couponData())} className='animate-none shadow-xl outline mx-2 text-white  p-2 px-6 rounded-lg cursor-pointer  m-2' style={{ background: 'linear-gradient(90deg, #273f5c, #af4caa)'}}>Edit</button>
                           }
                         </div>
                           {
-                                (details.accountId === data?.ownerId) && 
+                                (details.accountId === data?.ownerId) && checkPath() &&
                                 <>
-                      
-                                <button onClick={()=> { setTransferModal(true); setTokenId({
-                                  id,
-                                  store
-                                })}} className='animate-none shadow-xl outline mx-2 text-white  p-2 px-6 rounded-lg cursor-pointer  m-2'>
-                                  Transfer
-                                </button>
+                                  <button onClick={()=> { setTransferModal(true); setTokenId({
+                                    id,
+                                    store
+                                  })}} className='w-full text-center h-full shadow-black flex items-center justify-center py-3 px-4 rounded bg-white border border-slate-200 hover:border-slate-300 shadow-lg duration-150 ease-in-out'>
+                                    <TelegramLogo size={18} />
+                                    Transfer
+                                  </button>
                                 </>
                           }
               </div>

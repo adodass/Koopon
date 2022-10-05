@@ -121,7 +121,7 @@ function Market() {
   }, [coupons.length])
 
 
-  console.table(details.balance)
+  console.table(tokenId);
 
   return (
     <>
