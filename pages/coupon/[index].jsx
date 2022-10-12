@@ -226,6 +226,7 @@ function Product() {
                           setTokenId={setTokenId}
                           simpleTransferToken={simpleTransferToken}
                           setOpenEmailCustomer={setOpenEmailCustomer}
+                          setData={setData}
                           {...data} 
                           {...item} 
                         />
