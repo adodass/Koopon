@@ -32,8 +32,10 @@ function Product() {
   const [openCompareModal, setOpenCompareModal] = useState(false)
   const [openRaffle, setOpenRaffle] = useState(false)
   const [openEmailCustomer, setOpenEmailCustomer] = useState(false)
+  const [openListModal, setOpenListModal] = useState(false)
   const [searchInput, setSearchInput] = useState('');
   const [coupons, setCoupons] = useState([]);
+  const [price, setPrice] = useState(0);
 
 
   function filteredCoupons(arr = []) {
@@ -72,6 +74,9 @@ function Product() {
         console.log(error)
     }
 }
+async function listToken() {
+  console.log(data);
+}
 
 
   async function getList() {
@@ -92,9 +97,9 @@ function Product() {
     // console.log(await wallet?.api?.fetchLists())
     // console.log(await wallet?.api?.fetchMarketplace())
     // console.log(await wallet?.api?.fetchListById('51:shop45.mintspace2.testnet'))
-    console.log("Store: ", response)
-    console.log("Token: ", response2)
-    console.log("Thing: ", response3?.data?.thing[0])
+    // console.log("Store: ", response)
+    // console.log("Token: ", response2)
+    // console.log("Thing: ", response3?.data?.thing[0])
     setCouponDetails(response3?.data?.thing[0])
     // setCouponDetails(response?.data?.store[0]?.things[0])
   }
@@ -157,11 +162,16 @@ function Product() {
   }, [data?._id]);
 
 
+  
+  
+  async function connectContract(params) {
+    console.log("Contract======>", await wallet.connectTo('jerahmusags.testnet'));
+  }
+  
   useEffect(() => {
     getAllCoupons();
+    connectContract();
   }, [])
-
-
 
 
 
@@ -170,7 +180,6 @@ function Product() {
   // }, [couponDetails?.length])
 
 
-  console.table(data);
   
   return (
     <>
@@ -227,6 +236,7 @@ function Product() {
                           simpleTransferToken={simpleTransferToken}
                           setOpenEmailCustomer={setOpenEmailCustomer}
                           setData={setData}
+                          setOpenListModal={setOpenListModal}
                           {...data} 
                           {...item} 
                         />
@@ -363,7 +373,7 @@ function Product() {
                           </li>
                           <li>
                             <button onClick={() => {
-                              compareAandB({...data}); setOpenCompareModal(true);
+                             setData(data); setOpenListModal(true);
                             }} className="w-full h-full shadow-black text-left py-3 px-4 rounded bg-white border border-slate-200 hover:border-slate-300 shadow-lg duration-150 ease-in-out">
                               <div className="flex flex-wrap items-center justify-center mb-0.5">
                                 <span className="font-semibold text-slate-800" >List</span>
@@ -561,6 +571,21 @@ function Product() {
           <input style={{fontSize: '0.7rem', width: '100%'}} type='email' className='text-gray rounded p-4 bg-white mb-2 ' placeholder='john@email.com' onChange={e => {}}/>
         
           <button style={{ background: 'green'}} className={`w-full text-white h-full shadow-black text-left py-3 px-4 mb-2 rounded bg-white border border-slate-200 hover:border-slate-300 shadow-lg duration-150 ease-in-out`}>Send</button>
+          </div>
+        </div>
+      }
+      {
+        openListModal &&
+        <div className='fixed top-0 left-0 right-0 bottom-0 w-full min-h-screen z-20 flex justify-center items-center' style={{ background: 'rgba(0, 0, 0, 0.9)'}}>
+          <div className=' rounded-lg p-6 relative' style={{ background: '#273f5c'}}>
+            <div className='flex justify-between items-center'>
+              <h1 className='text-white'>List token</h1>
+              <h1 className='text-white cursor-pointer'  onClick={() => {setOpenListModal(false); setData({})}}>close</h1>
+            </div>
+          <hr className='my-2'></hr>
+          <input style={{fontSize: '0.7rem', width: '100%'}} type='number' className='text-gray rounded p-4 bg-white mb-2 ' placeholder='1.2N' onChange={e => {}}/>
+        
+          <button style={{ background: 'green'}} onClick={listToken} className={`w-full text-white h-full shadow-black text-left py-3 px-4 mb-2 rounded bg-white border border-slate-200 hover:border-slate-300 shadow-lg duration-150 ease-in-out`}>List</button>
           </div>
         </div>
       }

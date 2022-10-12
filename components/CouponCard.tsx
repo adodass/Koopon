@@ -35,7 +35,8 @@ function CouponCards({
     setTransferModal,
     setTokenId,
     simpleTransferToken,
-    setOpenEmailCustomer
+    setOpenEmailCustomer,
+    setOpenListModal
   }:any) {
 
     const { wallet, isConnected, details } = useWallet();
@@ -57,6 +58,7 @@ function CouponCards({
     function returnData() {
       return {
         _id,
+        id,
         store_name, 
         category,
         data, 
@@ -235,18 +237,24 @@ function CouponCards({
                             !is_minted && <button onClick={() => setData(couponData())} className='animate-none shadow-xl outline mx-2 text-white  p-2 px-6 rounded-lg cursor-pointer  m-2' style={{ background: 'linear-gradient(90deg, #273f5c, #af4caa)'}}>Edit</button>
                           }
                         </div>
+                        <div className="flex">
                           {
                                 (details.accountId === data?.ownerId) && checkPath() &&
                                 <>
                                   <button onClick={()=> { setTransferModal(true); setTokenId({
                                     id,
                                     store
-                                  })}} className='w-full text-center h-full shadow-black flex items-center justify-center py-3 px-4 rounded bg-white border border-slate-200 hover:border-slate-300 shadow-lg duration-150 ease-in-out'>
+                                  })}} className='w-full text-center h-full shadow-black flex items-center justify-center py-3 px-4  bg-white border border-slate-200 hover:border-slate-300  duration-150 ease-in-out'>
                                     <TelegramLogo size={18} />
                                     Transfer
                                   </button>
+                                  <button onClick={()=> { setData(returnData()); setOpenListModal(true); }} className='w-full text-center h-full shadow-black flex items-center justify-center py-3 px-4  bg-white border border-slate-200 hover:border-slate-300  duration-150 ease-in-out'>
+                                    {/* <TelegramLogo size={18} /> */}
+                                    List
+                                  </button>
                                 </>
                           }
+                        </div>
               </div>
             </div>
                           
