@@ -30,6 +30,8 @@ function Product() {
   const [compare, setCompare] = useState([]);
   const [openDropdown, setDropdown] = useState(false)
   const [openCompareModal, setOpenCompareModal] = useState(false)
+  const [openRaffle, setOpenRaffle] = useState(false)
+  const [openEmailCustomer, setOpenEmailCustomer] = useState(false)
   const [searchInput, setSearchInput] = useState('');
   const [coupons, setCoupons] = useState([]);
 
@@ -195,15 +197,7 @@ function Product() {
                     <Link href='/market' className="text-sm font-medium text-white hover:animate-pulse" onClick={() => {localStorage.removeItem('data'); } }>&lt;- Back</Link>
                   </div>
 
-                  {/* <div style={{minWidth: '30rem', minHeight: '30rem', background: 'black', overflow: 'hidden'}}>
-
-                    {
-                      data?.data &&
-                      <Image className="" layout="responsive"
-                      width={100} height={100} src={data?.data?.media}  alt={data?.data?.title}/>
-                    }
-                        <Image className="" layout='responsive' width={100} height={100} src={"/assets/images/1.jpg"}  alt="User 04" />
-                  </div> */}
+              
                       
                   <header className="my-4">
                     {/* Title */}
@@ -231,6 +225,7 @@ function Product() {
                           setTransferModal={setTransferModal}
                           setTokenId={setTokenId}
                           simpleTransferToken={simpleTransferToken}
+                          setOpenEmailCustomer={setOpenEmailCustomer}
                           {...data} 
                           {...item} 
                         />
@@ -312,6 +307,7 @@ function Product() {
                               {/* <div className="text-sm">Lorem ipsum dolor sit amet elit sed do eiusmod.</div> */}
                             </button>
                           </li>
+                         
                           {
                             transferModal && data?.data?.ownerId &&
                             <div className='fixed top-0 left-0 right-0 bottom-0 w-full min-h-screen z-20 flex justify-center items-center' style={{ background: 'rgba(0, 0, 0, 0.9)'}}>
@@ -361,20 +357,33 @@ function Product() {
                             }} className="w-full h-full shadow-black text-left py-3 px-4 rounded bg-white border border-slate-200 hover:border-slate-300 shadow-lg duration-150 ease-in-out">
                               <div className="flex flex-wrap items-center justify-center mb-0.5">
                                 <span className="font-semibold text-slate-800" >Compare</span>
-                                {/* <span className="font-medium text-emerald-600">$89.00</span> */}
                               </div>
-                              {/* <div className="text-sm">Lorem ipsum dolor sit amet elit sed do eiusmod.</div> */}
+                            </button>
+                          </li>
+                          <li>
+                            <button onClick={() => {
+                              compareAandB({...data}); setOpenCompareModal(true);
+                            }} className="w-full h-full shadow-black text-left py-3 px-4 rounded bg-white border border-slate-200 hover:border-slate-300 shadow-lg duration-150 ease-in-out">
+                              <div className="flex flex-wrap items-center justify-center mb-0.5">
+                                <span className="font-semibold text-slate-800" >List</span>
+                              </div>
                             </button>
                           </li>
                           <li>
                             <button className="w-full h-full  py-3 px-4 rounded  shadow-lg text-white shadow-black duration-150 ease-in-out text-white">
                               <div className="flex flex-wrap items-center justify-center mb-0.5">
                                 <span className="font-semibold" >Auction</span>
-                                {/* <span className="font-medium text-emerald-600">$89.00</span> */}
                               </div>
-                              {/* <div className="text-sm">Lorem ipsum dolor sit amet elit sed do eiusmod.</div> */}
                             </button>
                           </li>
+                          <li>
+                            <button onClick={() => { setOpenRaffle(true); setData(data)}} className="w-full h-full  py-3 px-4 rounded  shadow-lg text-white shadow-black duration-150 ease-in-out text-white">
+                              <div className="flex flex-wrap items-center justify-center mb-0.5">
+                                <span className="font-semibold" >Raffle</span>
+                              </div>
+                            </button>
+                          </li>
+                          
                         </>
                       }
                     </ul>
@@ -516,6 +525,41 @@ function Product() {
 
             </div>
           <button onClick={() => { setSearchInput(''); setOpenCompareModal(false); setDropdown(false); setCompare([])}} className='animate-none shadow-xl outline mx-2  p-2 px-6 rounded-lg cursor-pointer  m-2'>Close</button>
+          </div>
+        </div>
+      }
+
+
+
+{
+        openRaffle &&
+        <div className='fixed top-0 left-0 right-0 bottom-0 w-full min-h-screen z-20 flex justify-center items-center' style={{ background: 'rgba(0, 0, 0, 0.9)'}}>
+          <div className=' rounded-lg p-6 relative' style={{ background: '#273f5c'}}>
+            <div className='flex justify-between items-center'>
+              <h1 className='text-white'>Setup {data?.store_name} for Raffle</h1>
+              <h1 className='text-white cursor-pointer' onClick={() => {setOpenRaffle(false); setData({})}}>close</h1>
+            </div>
+          <hr className='my-2'></hr>
+          <input style={{fontSize: '0.7rem', width: '100%'}} className='text-gray rounded p-4 bg-white mb-2 ' placeholder='Name' onChange={e => {}}/>
+          <input style={{fontSize: '0.7rem', width: '100%'}} type="date" className='text-gray rounded p-4 bg-white mb-2 ' placeholder='duration' onChange={e => {}}/>
+          <input style={{fontSize: '0.7rem', width: '100%'}} className='text-gray rounded p-4 bg-white mb-2 ' placeholder='Prize' onChange={e => {}}/>
+         
+          <button style={{ background: 'green'}} className={`w-full text-white h-full shadow-black text-left py-3 px-4 mb-2 rounded bg-white border border-slate-200 hover:border-slate-300 shadow-lg duration-150 ease-in-out`}>Create</button>
+          </div>
+        </div>
+      }
+{
+        openEmailCustomer &&
+        <div className='fixed top-0 left-0 right-0 bottom-0 w-full min-h-screen z-20 flex justify-center items-center' style={{ background: 'rgba(0, 0, 0, 0.9)'}}>
+          <div className=' rounded-lg p-6 relative' style={{ background: '#273f5c'}}>
+            <div className='flex justify-between items-center'>
+              <h1 className='text-white'>Send email</h1>
+              <h1 className='text-white cursor-pointer'  onClick={() => {setOpenEmailCustomer(false); setData({})}}>close</h1>
+            </div>
+          <hr className='my-2'></hr>
+          <input style={{fontSize: '0.7rem', width: '100%'}} type='email' className='text-gray rounded p-4 bg-white mb-2 ' placeholder='john@email.com' onChange={e => {}}/>
+        
+          <button style={{ background: 'green'}} className={`w-full text-white h-full shadow-black text-left py-3 px-4 mb-2 rounded bg-white border border-slate-200 hover:border-slate-300 shadow-lg duration-150 ease-in-out`}>Send</button>
           </div>
         </div>
       }

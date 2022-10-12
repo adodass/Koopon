@@ -34,7 +34,8 @@ function CouponCards({
     setOpenCompareModal,
     setTransferModal,
     setTokenId,
-    simpleTransferToken
+    simpleTransferToken,
+    setOpenEmailCustomer
   }:any) {
 
     const { wallet, isConnected, details } = useWallet();
@@ -53,27 +54,29 @@ function CouponCards({
    
     }
 
+    function returnData() {
+      return {
+        _id,
+        store_name, 
+        category,
+        data, 
+        is_minted, 
+        expiry_date, 
+        start_date, 
+        price, 
+        quantity, 
+        discount, 
+        description, 
+        accountId,
+        store,
+      }
+    }
+
     
 
     function couponData() {
       setFeedbackModalOpen(true)
-      return (
-        {
-          _id,
-          store_name, 
-          category,
-          data, 
-          is_minted, 
-          expiry_date, 
-          start_date, 
-          price, 
-          quantity, 
-          discount, 
-          description, 
-          accountId,
-          store,
-        }
-      )
+      return returnData();
     }
     function mintData() {
       setMintModalOpen(true)
@@ -135,7 +138,10 @@ function CouponCards({
                 <div className="relative flex justify-between items-center px-4 pt-2">
                   {
                     is_minted && (checkPath()) && 
-                    <button className="">
+                    <button className="" onClick={() => {
+                      setData(returnData());
+                      setOpenEmailCustomer(true);
+                    }}>
                     <div title={"Share"} className="text-slate-100 p-1 bg-slate-900 bg-opacity-60 rounded-full" style={{ background: 'white'}}>
                       <ShareNetwork size={20} color="gray" />
                     </div>
