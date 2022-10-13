@@ -76,6 +76,12 @@ function Product() {
 }
 async function listToken() {
   console.log(data);
+  try {
+    const res = await wallet.list(data?.id, data?.data?.store?.id, price);
+    console.log(res)
+  } catch (error) {
+    console.log(error)
+  }
 }
 
 
@@ -583,7 +589,7 @@ async function listToken() {
               <h1 className='text-white cursor-pointer'  onClick={() => {setOpenListModal(false); setData({})}}>close</h1>
             </div>
           <hr className='my-2'></hr>
-          <input style={{fontSize: '0.7rem', width: '100%'}} type='number' className='text-gray rounded p-4 bg-white mb-2 ' placeholder='1.2N' onChange={e => {}}/>
+          <input style={{fontSize: '0.7rem', width: '100%'}} type='number' className='text-gray rounded p-4 bg-white mb-2 ' value={price} placeholder='1.2N' onChange={e => {setPrice(e.target.value)}}/>
         
           <button style={{ background: 'green'}} onClick={listToken} className={`w-full text-white h-full shadow-black text-left py-3 px-4 mb-2 rounded bg-white border border-slate-200 hover:border-slate-300 shadow-lg duration-150 ease-in-out`}>List</button>
           </div>
