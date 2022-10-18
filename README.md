@@ -46,3 +46,11 @@ Therefore, the application is partially decentralized application (dApp) because
 
 ## 3. Backend development 
 The backend development of the project uses Nodejs, Typescript and NoSQL databse (MongoDB) to deliver a secure and fast RESTful API to support features of the application.
+
+
+
+## 4. Front End App Design
+Mintbase have created a boilerplate to build on top of the exposed APIs, the technologies used are Nextjs  and Typescript.
+
+## 5. Connecting the Frontend to the Backend 
+Koopon application frontend and backend are connected via RESTful APIs created at the backend. #2 contains the application architectural diagram to have an overview of how the parts are coupled. Also here is a link to the API documentation of the application: [https://documenter.getpostman.com/view/8893798/2s847FuZD1#a0ba265b-9d0a-4c24-924e-8b27be4ac233]
