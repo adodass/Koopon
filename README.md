@@ -34,6 +34,7 @@ The product enables businesses to reward their customers, listed below are the f
 ## 1. Product Design(UI/UX)
 The current version of the application is running on [https://koopon-puce.vercel.app/]. However, the product is being upgraded to a have a new design, feel and aesthetic. Below are some of the images, click this link: [https://www.figma.com/file/WHnX8JgYYszodCTIp1fgMW/Koopon?node-id=134%3A1576] to view the full design for the upgrade.
 
+<img src="https://res.cloudinary.com/gosa-2013/image/upload/v1666093167/Desktop_-_2_tmz9jw.png" />
 
 
 ## 2. Definition and structuring of smart contracts and business logic 
@@ -41,3 +42,7 @@ Most of the features listed above require a contract deployed on a chain to allo
 Therefore, the application is partially decentralized application (dApp) because it also leverages on the Koopon API to achieve some implementation of its feaures.
 
 <img src="https://res.cloudinary.com/gosa-2013/image/upload/v1666092048/KOOPON_pjmekq.jpg" />
+
+
+## 3. Backend development 
+The backend development of the project uses Nodejs, Typescript and NoSQL databse (MongoDB) to deliver a secure and fast RESTful API to support features of the application.
