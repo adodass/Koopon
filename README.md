@@ -66,4 +66,4 @@ In a bid to minimise the bugs in the application, technologies like Typescript a
 Heuristic evalution on koopon application is carried concurrently as features and milestones of the application is implemented. And this process aids in identifying unpredictions happening at every stage.
 
 ## 8. Deploy on TestNet
-Koopon is already deployed on the TESTNET, and soon it the application will be migrated to the MAINET.
+Koopon is already deployed on the TESTNET, and soon the application will be migrated to the MAINET.
