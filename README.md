@@ -54,3 +54,15 @@ Mintbase have created a boilerplate to build on top of the exposed APIs, the tec
 
 ## 5. Connecting the Frontend to the Backend 
 Koopon application frontend and backend are connected via RESTful APIs created at the backend. #2 contains the application architectural diagram to have an overview of how the parts are coupled. Also here is a link to the API documentation of the application: [https://documenter.getpostman.com/view/8893798/2s847FuZD1#a0ba265b-9d0a-4c24-924e-8b27be4ac233]
+
+
+
+
+## 6. Mock data load and validation testing
+In a bid to minimise the bugs in the application, technologies like Typescript are implmented to help with type safety and also test development will be implored to handle some of the edge cases in the application.
+
+
+## 7.Heuristic Evaluation
+
+
+## 8. Deploy on TestNet
