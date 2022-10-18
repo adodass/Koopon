@@ -11,6 +11,7 @@ import * as nearAPI from "near-api-js";
 import Link from 'next/link';
 import axios from 'axios';
 
+
 function Product() {
   const { utils } = nearAPI;
   const router = useRouter();
@@ -76,8 +77,14 @@ function Product() {
 }
 async function listToken() {
   console.log(data);
+  // converts NEAR amount into yoctoNEAR (10^-24)
+
+  const amountInYocto = utils.format.parseNearAmount(price);
   try {
-    const res = await wallet.list(data?.id, data?.data?.store?.id, price);
+    const res = await wallet.list(data?.id, data?.data?.store?.id, amountInYocto, {
+      autotransfer: true,
+      marketAddress: ""
+    });
     console.log(res)
   } catch (error) {
     console.log(error)
@@ -134,7 +141,7 @@ async function listToken() {
   async function deployAStore() {
 
 
-    console.log({...store, storeId: couponDetails?.storeId});
+    // console.log({...store, storeId: couponDetails?.storeId});
     
     if (!couponDetails?.storeId| !store.price || !store.tokenId) {
       setToastErrorOpen2(true);
@@ -155,7 +162,7 @@ async function listToken() {
       contractName
     });
     const response = await wallet.simpleTransfer(tokenId, recieverId, contractName);
-    console.log(response);
+    // console.log(response);
   }
 
   useEffect(() => {
@@ -171,12 +178,17 @@ async function listToken() {
   
   
   async function connectContract(params) {
-    console.log("Contract======>", await wallet.connectTo('jerahmusags.testnet'));
+    const connectedContract = await wallet.connect({
+      accountId: "jerahmusags.testnet",
+      contractAddress: "jerahmusags.testnet"
+    })
+    console.log("Contract======>", connectedContract);
+    
   }
   
   useEffect(() => {
     getAllCoupons();
-    connectContract();
+    // connectContract();
   }, [])
 
 
