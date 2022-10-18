@@ -62,7 +62,8 @@ Koopon application frontend and backend are connected via RESTful APIs created a
 In a bid to minimise the bugs in the application, technologies like Typescript are implmented to help with type safety and also test development will be implored to handle some of the edge cases in the application.
 
 
-## 7.Heuristic Evaluation
-
+## 7. Heuristic Evaluation
+Heuristic evalution on koopon application is carried concurrently as features and milestones of the application is implemented. And this process aids in identifying unpredictions happening at every stage.
 
 ## 8. Deploy on TestNet
+Koopon is already deployed on the TESTNET, and soon it the application will be migrated to the MAINET.
