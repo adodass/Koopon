@@ -1,4 +1,4 @@
-# Koopon Frontend
+# Koopon
 
 
 KOOPON provides service providers and manufacturers with a way to reward their clients in a cost-effective manner as well as provide coupon holders with the option of trading these coupons. It is a win-win situation. Service providers have a way of keeping customers coming back, and customers/clients get rewarded and can trade for other coupons they desire.
