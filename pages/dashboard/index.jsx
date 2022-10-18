@@ -211,7 +211,7 @@ function Dashboard() {
   
         const update = {...metaData?.data, ...tokenData?.data}
     
-        console.log(update)
+        // console.log(update)
         
         if (!data._id) return;
         
