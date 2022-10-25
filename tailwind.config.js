@@ -9,8 +9,12 @@ module.exports = {
       },
       screens: {
         'xsm': {'max': '800px'}
+      },
+      backgroundImage: {
+        'hero-pattern': "url('/public/assets/images/1.jpg')",
       }
     },
+  
   },
   variants: {
     extend: {},

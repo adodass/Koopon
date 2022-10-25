@@ -8,16 +8,14 @@ interface IProps {
     ownerId: string;
   },
   discount: string;
-  
 }
 
 
 function CouponCard(props: IProps) {
   const { data: { media, description, title, ownerId }, discount } = props;
-  console.log(props)
   return (
     <>
-      <div className="col-span-full md:col-span-6 xl:col-span-4 bg-white shadow-lg rounded-md border border-slate-200 overflow-hidden m-2 w-64 ml-4 cursor-pointer hover:scale-110 delay-150 duration-300 ease-in-out hover:m-0 hover:z-10">
+      <div className="col-span-full md:col-span-6 xl:col-span-4 bg-white shadow-lg rounded-md border border-slate-200 overflow-hidden m-2 w-64 ml-4 cursor-pointer hover:scale-110 delay-150 duration-300 ease-in-out hover:m-0 hover:z-10 ">
         <div className="flex flex-col h-full">
           {/* Image */}
           <div className="relative">

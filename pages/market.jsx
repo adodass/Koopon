@@ -5,7 +5,7 @@ import Link from 'next/link';
 import { MbButton } from 'mintbase-ui';
 import { useWallet } from '../services/providers/MintbaseWalletContext';
 import Switch from "react-switch";
-import { Wallet, FolderOpen, Folder, SignOut, Storefront, HouseSimple, Ticket, X} from 'phosphor-react';
+import { PokerChip, Wallet, FolderOpen, Folder, SignOut, Storefront, HouseSimple, Ticket, X} from 'phosphor-react';
 import Toast from '../components/Toast';
 import CouponCards2 from "../components/CouponCard";
 import CouponCard from '../components/CouponCard/coupon-card';
@@ -127,29 +127,38 @@ function Market() {
   return (
     <>
       <div className='flex '>
-        <div className='min-h-screen fixed top-0 left-0 z-10 bg-card-color p-4 pt-32 min-w-fit xsm:hidden' >
+        <div className='min-h-screen fixed top-0 shadow-lg left-0 z-50  p-4 pt-32 min-w-fit xsm:hidden' style={{
+          // background: `${'linear-gradient(0deg, #fff, #273f5c)'}`
+        }}>
         
           <ul className='' style={{paddingTop: '2rem'}} >
             <Link href='/' className=''>
-              <li className='text-white cursor-pointer absolute  flex items-center' style={{ 
+              <li className='text-card-color cursor-pointer absolute  flex items-center' style={{ 
                 marginBottom: '2rem',
                 top: '1.5rem'
               }}> <Ticket size={32} /> Koopon</li>
             </Link>
             <Link href='/'>
-              <li className='text-white cursor-pointer flex items-center' style={{ marginBottom: '2rem', fontSize: '0.8rem'}}> <HouseSimple size={18} color="white" style={{marginRight: '1rem'}}/> Home</li>
+              <li className='text-card-color cursor-pointer flex items-center' style={{ marginBottom: '2rem', fontSize: '0.8rem'}}> <HouseSimple size={18}  style={{marginRight: '1rem'}}/> Home</li>
             </Link>
             <Link href='/market'>
-              <li className='text-white cursor-pointer flex items-center' style={{ marginBottom: '2rem', fontSize: '0.8rem'}}> <Storefront size={18} color="white" style={{marginRight: '1rem'}}/> Market Place</li>
+              <li className='text-card-color cursor-pointer flex items-center' style={{ marginBottom: '2rem', fontSize: '0.8rem'}}> <Storefront size={18}  style={{marginRight: '1rem'}}/> Market Place</li>
             </Link>
             <Link href='/dashboard'>
-              <li className='text-white cursor-pointer flex items-center' style={{ marginBottom: '2rem', fontSize: '0.8rem'}}> <Folder size={18} color="white" style={{marginRight: '1rem'}}/> My Coupons</li>
+              <li className='text-card-color cursor-pointer flex items-center' style={{ marginBottom: '2rem', fontSize: '0.8rem'}}> <PokerChip size={18}  style={{marginRight: '1rem'}}/>Rewards</li>
             </Link>
-            {isConnected && <li onClick={() => {wallet?.disconnect(); window.location.reload()}} className='text-white flex items-center cursor-pointer' style={{ marginBottom: '2rem', fontSize: '0.8rem'}}> <SignOut size={18} color="white" style={{marginRight: '1rem'}}/>{isConnected && "Disconnect wallet"}</li>}
+            <Link href='/dashboard'>
+              <li className='text-card-color cursor-pointer flex items-center' style={{ marginBottom: '2rem', fontSize: '0.8rem'}}> <Folder size={18}  style={{marginRight: '1rem'}}/> My Coupons</li>
+            </Link>
+            {isConnected && <li onClick={() => {wallet?.disconnect(); window.location.reload()}} className='text-card-color flex items-center cursor-pointer' style={{ marginBottom: '2rem', fontSize: '0.8rem'}}> <SignOut size={18} style={{marginRight: '1rem'}}/>{isConnected && "Disconnect wallet"}</li>}
           </ul>
+
         </div>
-        <div  className="min-h-screen  w-full">
-          <nav className='p-4 flex items-center justify-end sticky top-0 right-0 z-20' style={{ width: '100%', background: '#1e3045' }}>
+
+        <div  className="min-h-screen  w-full ">
+          <nav className='p-4 flex items-center w-full justify-end sticky top-0 right-0 z-20  xsm:hidden' style={{
+            // background: `${'linear-gradient(90deg, #fff, #273f5c)'}`
+          }}>
             <div>
               <input type='search' placeholder="search stores, coupons, ..." onChange={e => setSearchInput(e.target.value)} style={{ background: 'rgba(39,63,92, 0.9)', color: 'white'}}  className='rounded-lg p-4'/>
             </div>
@@ -209,39 +218,64 @@ function Market() {
             >{details?.accountId || "Connect Wallet"}</div>
             </div>
           </nav>
-          <div className='flex justify-center p-4'>
-            <div className=' rounded-lg m-2 relative p-3 flex justify-between shadow-md' style={{
-              width: '50rem',
-              background: `${!toggle1 ? "linear-gradient(-90deg, #fff, #273f5c)" : 'linear-gradient(90deg, #fff, #273f5c)'}`,
-              // background: `${!toggle1 ? "linear-gradient(-90deg, #273f5c, #2a0f29)" : 'linear-gradient(90deg, #273f5c, #2a0f29)'}`,
+          <div className='flex justify-center p-4 xsm:p-0 xsm:m-0'>
+            <div className="lg:hidden md:hidden sm:hidden w-full  p-4 shadow-md" style={{ 
+               background: `${!toggle1 ? "linear-gradient(-90deg, #fff, #273f5c)" : 'linear-gradient(90deg, #fff, #273f5c)'}`
             }}>
-
-              <div className='p-4 '>
-                <Ticket size={100} color={`${ !toggle1 ? "white" : "#273f5c" } `}/>
-                {isConnected && <h1 className='text-white text-center' style={{color: `${ !toggle1 ? "white" : "#273f5c" } `}}>Balance: {details?.balance}</h1>}
-                {!isConnected && <h1 className='text-white text-center' style={{color: `${ !toggle1 ? "white" : "#273f5c" } `}}>Market Place</h1>}
-                
+              <div className='flex justify-center'>
+                <Ticket size={32} color="white"/> 
+                <h1 className='text-white text-center text-2xl '>Koopon</h1>
               </div>
-
-              <div className='p-3 f' style={{ width: '20rem', }}>
-                <h1 className='text-white font-extrabold text-right' style={{ fontSize: '1.4rem', color: `${ toggle1 ? "white" : "#273f5c" } `}}>Discover, Create and Sell Your Own NFT Coupons</h1>
-                <div className='flex justify-end'>
-                    <button onClick={() => isConnected ? setShowDeployModal(true): wallet?.connect({requestSignIn: true}) }className='animate-pulse mx-2 shadow-xl outline  text-white relative p-2 rounded-lg cursor-pointer  m-2' style={{ background: 'linear-gradient(90deg, #273f5c, #af4caa)'}}>Create store
-                    
-                    </button>
-                    {
-                      !toggle1 &&
-                      <button onClick={() => {}} className='animate-pulse shadow-xl outline mx-2 text-white relative p-2 px-6 rounded-lg cursor-pointer  m-2' style={{ background: 'linear-gradient(90deg, #273f5c, #af4caa)'}}>Mint</button>
-                    }
-                </div>
+              <div className='flex justify-center my-2'>
+                <input type='search' placeholder="search stores, coupons, ..." onChange={e => setSearchInput(e.target.value)}  className='rounded-lg p-4 text-center'/>
               </div>
-             
+              <div className='text-white text-center p-4 flex justify-evenly items-center'>
+                <Link href="/market">
+                  <Storefront size={32} color="#273f5c"  style={{marginRight: '1rem'}} />
+                </Link>
+                <Link href="/dashboard">
+                  <PokerChip size={32} color="#273f5c"  style={{marginRight: '1rem'}}/>
+                </Link>
+                <Link href="/dashboard">
+                  <Folder size={32} color="#273f5c"  style={{marginRight: '1rem'}}/>
+                </Link>
+                <SignOut size={32} color="#273f5c"  style={{marginRight: '1rem'}}/>
+              </div>
+            </div>
+          <div className=' rounded-lg m-2 relative p-3 ml-32 flex justify-between shadow-md w-3/4 xsm:hidden' style={{
+            // width: '50rem',
+            background: `${!toggle1 ? "linear-gradient(-90deg, #fff, #273f5c)" : 'linear-gradient(90deg, #fff, #273f5c)'}`,
+            // background: `${!toggle1 ? "linear-gradient(-90deg, #273f5c, #2a0f29)" : 'linear-gradient(90deg, #273f5c, #2a0f29)'}`,
+          }}>
 
+            
 
+            <div className='p-4 '>
+              <Ticket size={100} color={`${ !toggle1 ? "white" : "#273f5c" } `}/>
+              {isConnected && <h1 className='text-white text-center' style={{color: `${ !toggle1 ? "white" : "#273f5c" } `}}>Balance: {details?.balance}</h1>}
+              {!isConnected && <h1 className='text-white text-center' style={{color: `${ !toggle1 ? "white" : "#273f5c" } `}}>Market Place</h1>}
+              
             </div>
 
+            <div className='p-3 f' style={{ width: '20rem', }}>
+              <h1 className='text-white font-extrabold text-right' style={{ fontSize: '1.4rem', color: `${ toggle1 ? "white" : "#273f5c" } `}}>Discover, Create and Sell Your Own NFT Coupons</h1>
+              <div className='flex justify-end'>
+                  <button onClick={() => isConnected ? setShowDeployModal(true): wallet?.connect({requestSignIn: true}) }className='animate-pulse mx-2 shadow-xl outline  text-white relative p-2 rounded-lg cursor-pointer  m-2' style={{ background: 'linear-gradient(90deg, #273f5c, #af4caa)'}}>Create store
+                  
+                  </button>
+                  {
+                    !toggle1 &&
+                    <button onClick={() => {}} className='animate-pulse shadow-xl outline mx-2 text-white relative p-2 px-6 rounded-lg cursor-pointer  m-2' style={{ background: 'linear-gradient(90deg, #273f5c, #af4caa)'}}>Mint</button>
+                  }
+              </div>
+            </div>
+            
+
+
           </div>
-          <div  className="flex flex-wrap px-32 justify-center">
+
+          </div>
+          <div  className="flex flex-wrap px-32 justify-center w-full xsm:px-2">
             {
               filteredCoupons(coupons)?.filter(item => item.is_minted).map(item => (
                 <CouponCard 
