@@ -93,9 +93,9 @@ async function listToken() {
 
 
   async function getList() {
-    const response = await wallet?.api?.fetchStoreById(data?.data?.store?.id);
-    const response2 = await wallet?.api?.fetchTokenById(
-      data?.data?.id)
+    // const response = await wallet?.api?.fetchStoreById(data?.data?.store?.id);
+    // const response2 = await wallet?.api?.fetchTokenById(
+    //   data?.data?.id)
     const response3 = await wallet?.api?.fetchThingById(`${data?.data?.thing?.metaId}:${data?.data?.store?.id}`)
     // console.log(data?.data?.store?.id)
     // console.log('Metadata: ', data?.data?.thing?.metaId+ ":" + data?.data?.store?.id);
@@ -169,10 +169,10 @@ async function listToken() {
     const getData = JSON.parse(localStorage.getItem('data'));
     setData(getData);
     // console.log("Get data: ", getData);
-    if(data._id){
-      getList()
+    if(data?._id){
+      getList();
     }
-  }, [data?._id]);
+  }, [data]);
 
 
   
