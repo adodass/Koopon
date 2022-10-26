@@ -1,4 +1,6 @@
 import Image from "next/image"
+import Link from "next/link";
+import { useRouter } from "next/router"
 
 interface IProps {
   data: {
@@ -8,14 +10,37 @@ interface IProps {
     ownerId: string;
   },
   discount: string;
+  is_minted: string;
+  expiry_date: string;
+  start_date: string;
+  _id: string;
 }
 
 
 function CouponCard(props: IProps) {
-  const { data: { media, description, title, ownerId }, discount } = props;
+  const { 
+    data: { media, description, title, ownerId }, 
+    discount, 
+    is_minted,
+   } = props;
+
+   const router = useRouter();
+
+
+  function saveToLocalStorage() {
+    if(!is_minted) {
+      return alert('Coupon not minted!');
+    }
+    localStorage.setItem('data', JSON.stringify({
+      ...props
+    }));
+
+    router.push(`/coupon/${props?._id}`)
+  }
+
   return (
-    <>
-      <div className="col-span-full md:col-span-6 xl:col-span-4 bg-white shadow-lg rounded-md border border-slate-200 overflow-hidden m-2 w-64 ml-4 cursor-pointer hover:scale-110 delay-150 duration-300 ease-in-out hover:m-0 hover:z-10 ">
+    <Link href={`/coupon/${props?._id}`} passHref={true}>
+      <div onClick={saveToLocalStorage} className="col-span-full md:col-span-6 xl:col-span-4 bg-white shadow-lg rounded-md border border-slate-200 overflow-hidden m-2 w-64 ml-4 cursor-pointer hover:scale-110 delay-150 duration-300 ease-in-out hover:m-0 hover:z-10 ">
         <div className="flex flex-col h-full">
           {/* Image */}
           <div className="relative">
@@ -38,9 +63,9 @@ function CouponCard(props: IProps) {
             {/* Card body */}
             <div className="grow">
               <header className="mb-2">
-                <a href="#0">
+                <div>
                   <h3 className="text-lg text-slate-800 font-semibold mb-1">{title?.toUpperCase()}</h3>
-                </a>
+                </div>
                 {
                   description &&
                    <div title={description} className="text-sm text-gray-400">{ description.length > 20 ? description.slice(0, 20) + "..." : description}</div>
@@ -61,7 +86,7 @@ function CouponCard(props: IProps) {
           </div>
         </div>
       </div>
-    </>
+    </Link>
   )
 }
 

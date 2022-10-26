@@ -201,7 +201,9 @@ async function listToken() {
   
   return (
     <>
-      <div className="flex h-screen overflow-hidden" style={{ background: '#1e3045'}}>
+      <div className="flex h-screen overflow-hidden bg-white" 
+      // style={{ background: '#1e3045'}}
+      >
 
         {/* Sidebar */}
         {/* <Sidebar sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} /> */}
@@ -228,8 +230,8 @@ async function listToken() {
                       
                   <header className="my-4">
                     {/* Title */}
-                    <h1 className="text-2xl text-white md:text-3xl font-bold mb-2">{data?.data?.title}✨</h1>
-                    <p className='text-white'>{data?.data?.description}</p>
+                    <h1 className="text-2xl text-gray-400 md:text-3xl font-bold mb-2">{data?.data?.title}✨</h1>
+                    <p className='text-gray-400'>{data?.data?.description}</p>
                    
                   </header>
 

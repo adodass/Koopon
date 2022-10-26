@@ -134,7 +134,9 @@ function CouponCards({
 
     return (
         <>
-            <div style={{ width: '15rem', background: 'rgba(39,63,92, 0.9)'}} className="  hover:scale-110 delay-150 duration-300 ease-in-out  col-span-full m-4 sm:col-span-6 xl:col-span-3 bg-white shadow-lg rounded-lg overflow-hidden">
+            <div style={{ width: '15rem', 
+            // background: 'rgba(39,63,92, 0.9)'
+            }} className="  hover:scale-110 delay-150 duration-300 ease-in-out  col-span-full m-4 sm:col-span-6 xl:col-span-3 bg-white shadow-lg rounded-lg overflow-hidden ">
               <div className="flex flex-col h-full">
                 {/* Image */}
                 <div className="relative flex justify-between items-center px-4 pt-2">
@@ -196,15 +198,15 @@ function CouponCards({
                  
                   
                     <header className="mb-4 p-0 cursor-pointer " onClick={saveToLocalStorage}>
-                      <p className="mb-1 text-white text-center px-3" style={{fontSize: '0.8rem'}}>Store: {data && store?.split('.')[0]}</p>
+                      <p className="mb-1 text-gray-400 text-center px-3" style={{fontSize: '0.8rem'}}>Store: {data && store?.split('.')[0]}</p>
                       <div className="flex justify-center p-0 rounded-lg">
                        {data && <Image src={`${data?.media}`} alt="..." className="rounded-lg" width={200} height={200} quality={70}
                         />}
                         {!data && <Ticket size={100} color="white"/>}
                       </div>
-                      <div className="text-sm text-center text-white m-2" style={{ fontSize: '0.7rem'}}>{description}</div>
-                      {id && <p className="text-rose-400 text-center" style={{ fontSize: '0.6rem'}}>token id: {id}</p>} 
-                      {ownerId && <p className="text-white text-center" style={{ fontSize: '0.6rem'}}>Owner: {ownerId}</p>} 
+                      <div className="text-sm text-center text-gray-400 m-2" style={{ fontSize: '0.7rem'}}>{description}</div>
+                      {id && <p className="text-rose-400 text-center" style={{ fontSize: '0.6rem'}}>token id: #{id?.split(":")[0]}</p>} 
+                      {ownerId && <p className="text-gray-400 text-center" style={{ fontSize: '0.6rem'}}>Owner: {ownerId}</p>} 
 
                     </header>
                    
