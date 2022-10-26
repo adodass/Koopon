@@ -77,7 +77,7 @@ const Home = () => {
                 <section className='flex justify-center  pt-8' style={{ paddingTop: '2rem'}}>
                     <div className='' style={{ padding: '5rem', paddingTop: '10rem'}}>
                         <h1 style={{ fontSize: '4rem', lineHeight: 1.2, color: 'linear-gradient(90deg, #273f5c, #af4caa)'}} className="text-white font-extrabold">Get Any NFT Coupons Online</h1>
-                        <p className='m-2 text-white'>Everything coupons...</p>
+                        <p className='m-2 text-white'>Businesses rewarding customers...</p>
                         <Link href='/market'>
                             <button className='css-button-3d--green animate-pulse'>Buy NFT Coupons</button>
                         </Link>

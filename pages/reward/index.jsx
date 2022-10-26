@@ -442,7 +442,7 @@ function Dashboard() {
             }
             {
               !(filteredCoupons(myCoupons)?.filter(item => !item.is_minted).length) &&
-              <p>No coupon(s)!</p>
+              <p>No reward(s)!</p>
             }
           </div>
         </div>

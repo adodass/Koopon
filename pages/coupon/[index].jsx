@@ -174,7 +174,7 @@ async function listToken() {
     if(data?._id){
       getList();
     }
-  }, [data._id, getList]);
+  }, [data]);
 
 
   
@@ -254,19 +254,19 @@ async function listToken() {
 
                   <div className='flex justify-center items-center flex-wrap' style={{ height: '60vh', overflowY: 'scroll'}}>
                     {
-                      couponDetails?.tokens?.map((item, index) => (
-                        <CouponCards 
-                          key={index.toString()}
-                          burnOne={burnSpecificCoupon}  
-                          setTransferModal={setTransferModal}
-                          setTokenId={setTokenId}
-                          simpleTransferToken={simpleTransferToken}
-                          setOpenEmailCustomer={setOpenEmailCustomer}
-                          setData={setData}
-                          setOpenListModal={setOpenListModal}
-                          {...data} 
-                          {...item} 
-                        />
+                      couponDetails?.tokens?.filter(item => item?.ownerId === details?.accountId).map((item, index) => (
+                          <CouponCards 
+                            key={index.toString()}
+                            burnOne={burnSpecificCoupon}  
+                            setTransferModal={setTransferModal}
+                            setTokenId={setTokenId}
+                            simpleTransferToken={simpleTransferToken}
+                            setOpenEmailCustomer={setOpenEmailCustomer}
+                            setData={setData}
+                            setOpenListModal={setOpenListModal}
+                            {...data} 
+                            {...item} 
+                          />
                       ))
                     }
                   </div>

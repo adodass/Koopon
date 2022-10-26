@@ -144,7 +144,7 @@ function Market() {
             <Link href='/market'>
               <li className='text-card-color cursor-pointer flex items-center' style={{ marginBottom: '2rem', fontSize: '0.8rem'}}> <Storefront size={18}  style={{marginRight: '1rem'}}/> Market Place</li>
             </Link>
-            <Link href='/dashboard'>
+            <Link href='/reward'>
               <li className='text-card-color cursor-pointer flex items-center' style={{ marginBottom: '2rem', fontSize: '0.8rem'}}> <PokerChip size={18}  style={{marginRight: '1rem'}}/>Rewards</li>
             </Link>
             <Link href='/dashboard'>
@@ -276,7 +276,7 @@ function Market() {
           </div>
 
           </div>
-          
+
           <div  className="flex flex-wrap px-32 justify-center w-full xsm:px-2">
             {
               filteredCoupons(coupons)?.filter(item => item.is_minted).map(item => (
