@@ -166,13 +166,15 @@ async function listToken() {
   }
 
   useEffect(() => {
-    const getData = JSON.parse(localStorage.getItem('data'));
-    setData(getData);
+    if (!data._id){
+      const getData = JSON.parse(localStorage.getItem('data'));
+      setData(getData);
+    }
     // console.log("Get data: ", getData);
     if(data?._id){
       getList();
     }
-  }, [data]);
+  }, [data._id, getList]);
 
 
   
@@ -223,7 +225,12 @@ async function listToken() {
                 {/* Content */}
                 <div className=" w-50">
                   <div className="mb-3">
-                    <Link href='/market' className="text-sm font-medium text-white hover:animate-pulse" onClick={() => {localStorage.removeItem('data'); } }>&lt;- Back</Link>
+                    {
+                      // eslint-disable-next-line @next/next/no-html-link-for-pages
+                      <a href='/market' className="text-sm font-medium  hover:animate-pulse" onClick={() => {localStorage.removeItem('data'); } }>
+                        &lt;- Back
+                      </a>
+                    }
                   </div>
 
               
