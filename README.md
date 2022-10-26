@@ -38,7 +38,7 @@ The current version of the application is running on [https://koopon-puce.vercel
 
 
 ## 2. Definition and structuring of smart contracts and business logic 
-Most of the features listed above require a contract deployed on a chain to allow features like `minting`, `listing `, `transfer` etc. to happen. In the bid to make an MVP to proof the concept, koopon was built on MINTBASE API which already deployed contracts that are sufficient to build an MVP.
+Most of the features listed above require a contract deployed on a chain to allow features like `minting`, `listing `, `transfer` etc. to happen. In the bid to make an MVP to prove the concept, koopon was built on MINTBASE API which already deployed contracts that are sufficient to build the Dapp.
 
 
 <img src="https://res.cloudinary.com/gosa-2013/image/upload/v1666092048/KOOPON_pjmekq.jpg" />
@@ -59,7 +59,7 @@ Koopon application frontend and backend are connected via RESTful APIs created a
 
 
 ## 6. Mock data load and validation testing
-In a bid to minimise the bugs in the application, technologies like Typescript are implmented to help with type safety and also test development will be implored to handle some of the edge cases in the application.
+In a bid to minimise the bugs in the application, technologies like Typescript are implmented to help with type safety and also test development will be implored to handle some of the edge cases in the application. 
 
 
 ## 7. Heuristic Evaluation
