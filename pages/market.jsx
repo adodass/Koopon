@@ -218,6 +218,7 @@ function Market() {
             >{details?.accountId || "Connect Wallet"}</div>
             </div>
           </nav>
+
           <div className='flex justify-center p-4 xsm:p-0 xsm:m-0'>
             <div className="lg:hidden md:hidden sm:hidden w-full  p-4 shadow-md" style={{ 
                background: `${!toggle1 ? "linear-gradient(-90deg, #fff, #273f5c)" : 'linear-gradient(90deg, #fff, #273f5c)'}`
@@ -275,6 +276,7 @@ function Market() {
           </div>
 
           </div>
+          
           <div  className="flex flex-wrap px-32 justify-center w-full xsm:px-2">
             {
               filteredCoupons(coupons)?.filter(item => item.is_minted).map(item => (

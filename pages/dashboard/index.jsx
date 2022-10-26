@@ -10,7 +10,7 @@ import ModalBasic from "../../components/ModalBasic";
 import Modal from "../../components/Modal";
 import Toast from '../../components/Toast';
 import Switch from "react-switch";
-import { Wallet, FolderOpen, Folder, SignOut, Storefront, HouseSimple, Ticket, X, Lock} from 'phosphor-react';
+import {PokerChip, Wallet, FolderOpen, Folder, SignOut, Storefront, HouseSimple, Ticket, X, Lock} from 'phosphor-react';
 
 function Dashboard() {
     const { wallet, isConnected, details } = useWallet();
@@ -310,30 +310,34 @@ function Dashboard() {
 
   return (
     <>
-      <div className='flex' style={{ paddingLeft: '15%'}}>
-        <div className='min-h-screen fixed top-0 left-0 z-10' style={{ background: '#1e3045', padding: '4rem 1rem', paddingTop: '7rem', width: '18%'}}>
+      <div className='flex'>
+        <div className='min-h-screen fixed top-0 shadow-lg left-0 z-50  p-4 pt-32 min-w-fit xsm:hidden' >
         
           <ul className='' style={{paddingTop: '2rem'}} >
-            <Link href='/' className=''>
-              <li className='text-white cursor-pointer absolute  flex items-center' style={{ 
+          <Link href='/' className=''>
+              <li className='text-card-color cursor-pointer absolute  flex items-center' style={{ 
                 marginBottom: '2rem',
                 top: '1.5rem'
               }}> <Ticket size={32} /> Koopon</li>
             </Link>
             <Link href='/'>
-              <li className='text-white cursor-pointer flex items-center' style={{ marginBottom: '2rem', fontSize: '0.8rem'}}> <HouseSimple size={18} color="white" style={{marginRight: '1rem'}}/> Home</li>
+              <li className='text-card-color cursor-pointer flex items-center' style={{ marginBottom: '2rem', fontSize: '0.8rem'}}> <HouseSimple size={18}  style={{marginRight: '1rem'}}/> Home</li>
             </Link>
             <Link href='/market'>
-              <li className='text-white cursor-pointer flex items-center' style={{ marginBottom: '2rem', fontSize: '0.8rem'}}> <Storefront size={18} color="white" style={{marginRight: '1rem'}}/> Market Place</li>
+              <li className='text-card-color cursor-pointer flex items-center' style={{ marginBottom: '2rem', fontSize: '0.8rem'}}> <Storefront size={18}  style={{marginRight: '1rem'}}/> Market Place</li>
             </Link>
             <Link href='/dashboard'>
-              <li className='text-white cursor-pointer flex items-center' style={{ marginBottom: '2rem', fontSize: '0.8rem'}}> <Folder size={18} color="white" style={{marginRight: '1rem'}}/> My Coupons</li>
+              <li className='text-card-color cursor-pointer flex items-center' style={{ marginBottom: '2rem', fontSize: '0.8rem'}}> <PokerChip size={18}  style={{marginRight: '1rem'}}/>Rewards</li>
             </Link>
-            {isConnected && <li onClick={() => {wallet?.disconnect(); window.location.reload()}} className='text-white flex items-center cursor-pointer' style={{ marginBottom: '2rem', fontSize: '0.8rem'}}> <SignOut size={18} color="white" style={{marginRight: '1rem'}}/>{isConnected && "Disconnect wallet"}</li>}
+            <Link href='/dashboard'>
+              <li className='text-card-color cursor-pointer flex items-center' style={{ marginBottom: '2rem', fontSize: '0.8rem'}}> <Folder size={18}  style={{marginRight: '1rem'}}/> My Coupons</li>
+            </Link>
+            {isConnected && <li onClick={() => {wallet?.disconnect(); window.location.reload()}} className='text-card-color flex items-center cursor-pointer' style={{ marginBottom: '2rem', fontSize: '0.8rem'}}> <SignOut size={18} style={{marginRight: '1rem'}}/>{isConnected && "Disconnect wallet"}</li>}
           </ul>
         </div>
-        <div style={{ background: 'rgba(39,63,92, 0.9)', width: '100%', }} className="min-h-screen">
-          <nav className='p-4 flex items-center justify-end sticky top-0 right-0 z-20' style={{ width: '100%', background: '#1e3045' }}>
+
+        <div className="min-h-screen  w-full ">
+          <nav className='p-4 flex items-center w-full justify-end sticky top-0 right-0 z-20  xsm:hidden'>
             <div>
               <input type='search' placeholder="search coupons" onChange={e => setSearchInput(e.target.value)} style={{ background: 'rgba(39,63,92, 0.9)', color: 'white'}}  className='rounded-lg p-4'/>
             </div>
@@ -393,7 +397,8 @@ function Dashboard() {
             >{details?.accountId || "Connect Wallet"}</div>
             </div>
           </nav>
-          <div className='flex justify-center p-4'>
+
+          <div className='flex justify-center p-4 xsm:p-0 xsm:m-0'>
             <div className=' rounded-3xl m-2 relative p-3 flex justify-between' style={{
               width: '50rem',
               background: `${!toggle1 ? "linear-gradient(-90deg, #273f5c, #2a0f29)" : 'linear-gradient(90deg, #273f5c, #2a0f29)'}`,
@@ -421,9 +426,10 @@ function Dashboard() {
             </div>
 
           </div>
-          <div style={{ }} className="flex flex-wrap p-6 justify-center">
+          
+          <div className="flex flex-wrap px-32 justify-center w-full xsm:px-2">
             {
-              filteredCoupons(myCoupons)?.filter(item => item).map(item => (
+              filteredCoupons(myCoupons)?.filter(item => !item.is_minted).map(item => (
                 <CouponCards 
                   {...item} 
                   key={item._id} 
@@ -433,6 +439,10 @@ function Dashboard() {
                   setMintModalOpen={setShowMintModal}
                 />
               )).reverse()
+            }
+            {
+              !(filteredCoupons(myCoupons)?.filter(item => !item.is_minted).length) &&
+              <p>No coupon(s)!</p>
             }
           </div>
         </div>
@@ -581,20 +591,6 @@ function Dashboard() {
 
                 <div className="mx-2" style={{ width: '50%'}}>
 
-                  {/* <div className="mb-2">
-                    <div className="mb-2">
-                        <label className="text-white" htmlFor="store_name">Business/store name: <span className="text-rose-500">*</span></label>
-                    </div>
-                  <select  className="rounded-lg p-4 w-full" style={{ background: 'white', color: '#7f7f7f'}}  name="store" onChange={getInputData}>
-                      <option>Select store</option>
-                      {
-                        userDetails?.store?.map(item => (
-                          <option key={item.id} value={item.id}>{item.id}</option>
-                        ))
-                      }
-                    </select>
-                </div> */}
-
                   <div className='mb-2'>
                     <div className='mb-2'>
                       <label className='text-white '>Business/store name<span className="mx-2 text-rose-500">*</span></label>
@@ -651,20 +647,6 @@ function Dashboard() {
                       </div>
                     }
                   </div>
-                  
-                  {/* <div className='mb-2'>
-                    <div className='mb-2'>
-                      <label className='text-white'>Start Date<span className="mx-2 text-rose-500">*</span></label>
-                    </div>
-                    <input type='date' onChange={getInputData} defaultValue={data?.start_date}  id="start_date" name="start_date"  style={{ background: 'white', color: '#7f7f7f'}}  className='rounded-lg p-4 w-full'/>
-                  </div>
-                  
-                  <div className='mb-2'>
-                    <div className='mb-2'>
-                      <label className='text-white'>Expiry Date<span className="mx-2 text-rose-500">*</span></label>
-                    </div>
-                    <input type='date' onChange={getInputData} defaultValue={data?.expiry_date}  id="expiry_date" name="expiry_date"  style={{ background: 'white', color: '#7f7f7f'}}  className='rounded-lg p-4 w-full'/>
-                  </div> */}
                   
                   <div className='mb-2'>
                     <div className='mb-2'>
